@@ -1,4 +1,5 @@
-FROM anapsix/alpine-java
+FROM maven:3.6.0-jdk-11-slim AS build
 
-COPY gateway-0.0.1-SNAPSHOT.jar /home/gateway-0.0.1-SNAPSHOT.jar
-CMD ["java","-jar","/home/gateway-0.0.1-SNAPSHOT.jar"]
+
+COPY gateway-0.0.1-SNAPSHOT.jar .
+CMD ["java","-jar", "gateway-0.0.1-SNAPSHOT.jar"]
