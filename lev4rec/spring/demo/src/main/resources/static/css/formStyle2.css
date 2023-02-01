@@ -1,0 +1,39 @@
+fieldset
+{
+  
+  max-width:500px;
+  padding:16px;	  
+}
+
+
+body{
+	background-color:#ccccff;
+}
+
+.fieldset-frame{
+  border-radius: 25px;
+  margin-bottom: 1em;
+  border: 3px solid #4f0099;
+  border-right: 3px solid #4f0099;
+  border-bottom: 3px solid #4f0099;
+}
+
+.button {
+  transition-duration: 0.4s;
+  background-color: #d6d6f5; 
+}
+
+.button:hover {
+  background-color: #6f6fdc; 
+  color: #d6d6f5;
+}
+
+.generator {
+	display: block;
+	position: absolute;
+	top: 600px;
+	bottom: 200px;
+	left: 500;
+	right: 500;
+	margin: 213px;
+}

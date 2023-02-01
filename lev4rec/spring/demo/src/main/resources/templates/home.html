@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>LEV4REC - Chose your preferences</title>
+<link th:rel="stylesheet" th:href=@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}/>
+
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+	<script th:src="@{/webjars/requirejs/2.3.6/require.min.js}"></script> 
+
+		<script type="text/javascript">
+		//var baseUrl = window.location.pathname;
+		var baseUrl = "http://localhost:8891/"
+		console.log(baseUrl);
+		var fileIndex = baseUrl.indexOf("dsl.html");
+		if (fileIndex > 0)
+			baseUrl = baseUrl.slice(0, fileIndex);
+		require.config({
+			baseUrl: baseUrl,
+			paths: {				
+				"jquery": "/lev4rec/webjars/jquery/3.4.1/jquery.min",
+				"bootstrap" : "/lev4rec/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js",
+				"ace/ext/language_tools": "/lev4rec/webjars/ace/1.3.3/src/ext-language_tools",
+				"xtext/xtext-ace": "/lev4rec/js/xtext-ace"				
+			}
+		});
+		require(["/lev4rec/webjars/ace/1.3.3/src/ace.js"], function() {
+			require(["xtext/xtext-ace"], function(xtext) {
+				xtext.createEditor({
+					baseUrl: baseUrl,
+					syntaxDefinition: "/lev4rec/js/mode-rec.js"
+				});
+			});
+		});
+	</script> 
+	
+
+<style>
+fieldset {
+  border: 0;
+}
+
+
+</style>
+</head>
+
+
+
+
+<body>
+
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+
+  
+	<main>
+	  <h1>LEV4REC Feature model</h1>
+	  <p class="fs-5 col-md-8">Quickly and easily set your recommender system preferences.</p>
+  
+	  
+  
+	  <hr class="col-3 col-md-2 mb-5">
+  
+	  <div class="row g-5">
+		<div class="col-md-12">
+			<form id="checkForm" th:action="@{/dsl}" method="post" th:object="${config}" >  
+			<h3>Algorithm Component</h3>  
+				<fieldset>	
+						<div >        
+						<input id="algorithm_feature_parent_1" type="checkbox" th:field="*{CollaborativeFiltering}" onclick="set_algorithm_constraints('algorithm_feature_parent_1')"> <label>Collaborative filtering </label>
+							<fieldset id="collaborative_sub" style="display: none;">        
+								<div><input id="coll_sub_feature_1" type="checkbox" th:field="*{ItemBased}" onclick="disable_sub_features('coll_sub_feature_1', 'coll_sub_feature_2')"> Item based </div>		
+								<div> <input id="coll_sub_feature_2"  type="checkbox" th:field="*{UserBased}" onclick="disable_sub_features('coll_sub_feature_2', 'coll_sub_feature_1')" > User Based  </div>
+							</fieldset>
+						</div>
+				
+						<div>       
+							<input id="algorithm_feature_parent_2" type="checkbox" th:field="*{ContentBased}" onclick="set_algorithm_constraints('algorithm_feature_parent_2')"> <label>Content based </label>
+						</div>
+						<div>        
+							<input id="algorithm_feature_parent_3" type="checkbox" th:field="*{Classification}" onclick="set_algorithm_constraints('algorithm_feature_parent_3')"> <label>Classification </label>
+						
+						
+						<fieldset id="classification_sub" style="display: none;">        
+							<div><input id="class_sub_feature_1" type="checkbox" th:field="*{SupervisedAlgorithm}" onclick="set_classifier_constraints('class_sub_feature_1')" > Supervised algorithm </div> 
+					
+								<fieldset id="supervised_sub" style="display: none;">        
+									<div> <input id="supervised_sub_feature_1" type="checkbox" th:field="*{SVM}" onclick="set_supervised_constraints('supervised_sub_feature_1')"> SVM </div>		
+									<div> <input id="supervised_sub_feature_2"  type="checkbox" th:field="*{MNB}" onclick="set_supervised_constraints('supervised_sub_feature_2')"> MNB </div>
+									<div> <input id="supervised_sub_feature_3"  type="checkbox" th:field="*{SupervisedNeuralNetwork}" onclick="set_supervised_constraints('supervised_sub_feature_3')"> Supervised Neural Network </div>
+											<fieldset id="supervised_NN" style="display: none;">
+											<div> <input id="NNS_sub_1" type="checkbox" th:field="*{SupervisedRNN}" onclick="disable_NN_supervised_features('NNS_sub_1')">SupervisedRNN </div>
+											<div> <input id="NNS_sub_2"  type="checkbox" th:field="*{SupervisedDNN}" onclick="disable_NN_supervised_features('NNS_sub_2')">SupervisedDNN </div>
+											<div> <input id="NNS_sub_3"  type="checkbox" th:field="*{SupervisedFeedForwardNN}" onclick="disable_NN_supervised_features('NNS_sub_3')">SupervisedFeedForwardNN </div>
+											<div> <input id="NNS_sub_4"  type="checkbox" th:field="*{SupervisedGNN}" onclick="disable_NN_supervised_features('NNS_sub_4')">SupervisedGNN </div>
+											<div> <input id="NNS_sub_5"  type="checkbox" th:field="*{BayesianNN}" onclick="disable_NN_supervised_features('NNS_sub_5')">BayesianNN </div>
+											<div> <input id="NNS_sub_6"  type="checkbox" th:field="*{SupervisedCNN}" onclick="disable_NN_supervised_features('NNS_sub_6')">SupervisedCNN </div>
+										</fieldset>
+									<div> <input id="supervised_sub_feature_4" type="checkbox" th:field="*{DecisionTree}" onclick="set_supervised_constraints('supervised_sub_feature_4')"> DecisionTree </div>
+										
+								</fieldset>
+										
+							<input id="class_sub_feature_2"  type="checkbox" th:field="*{UnsupervisedAlgorithm}" onclick="set_classifier_constraints('class_sub_feature_2')"> UnsupervisedAlgorithm
+							
+								<fieldset id="unsupervised_sub" style="display: none;">
+									<div> <input id="unsupervised_sub_feature_1" type="checkbox" th:field="*{KNeighborhood}" onclick="set_unsupervised_constraints('unsupervised_sub_feature_1')">KNeighborhood </div>
+									<div>  <input id="unsupervised_sub_feature_2" type="checkbox" th:field="*{HierarchicalClustering}" onclick="set_unsupervised_constraints('unsupervised_sub_feature_2')">HierarchicalClustering </div>
+									<div> <input  id="unsupervised_sub_feature_3" type="checkbox" th:field="*{UnsupervisedNeuralNetwork}" onclick="set_unsupervised_constraints('unsupervised_sub_feature_3')">UnsupervisedNeuralNetwork </div> 
+										<fieldset id="unsupervised_NN" style="display: none;">
+											<div> <input id="NNU_sub_1" type="checkbox" th:field="*{UnsupervisedRNN}" onclick="disable_NN_unsupervised_features('NNU_sub_1')">UnsupervisedRNN </div>
+											<div> <input id="NNU_sub_2" type="checkbox" th:field="*{UnsupervisedDNN}" onclick="disable_NN_unsupervised_features('NNU_sub_2')">UnsupervisedDNN  </div>
+											<div> <input id="NNU_sub_3"  type="checkbox" th:field="*{UnsupervisedFeedForwardNN}" onclick="disable_NN_unsupervised_features('NNU_sub_3')">UnsupervisedFeedForwardNN </div>
+											<div> <input id="NNU_sub_4" type="checkbox" th:field="*{UnsupervisedGNN}" onclick="disable_NN_unsupervised_features('NNU_sub_4')"> UnsupervisedGNN </div>
+											<div> <input id="NNU_sub_5" type="checkbox" th:field="*{UnsupervisedCNN}" onclick="disable_NN_unsupervised_features('NNU_sub_5')"> UnsupervisedCNN	</div>					
+										</fieldset>        	 
+								</fieldset>
+						</fieldset>   
+						<div> <input id="algorithm_feature_parent_4"  type="checkbox" th:field="*{MiningAlgorithm}"  onclick="set_algorithm_constraints('algorithm_feature_parent_4')">MiningAlgorithm</div>
+							<fieldset id="data_mining_sub" style="display: none;">
+								<div> <input id="mining_sub_feature_1"  type="checkbox" th:field="*{AssociationRuleMining}" onclick="set_mining_constraints('mining_sub_feature_1')">AssociationRuleMining</div>
+								<div> <input id="mining_sub_feature_2" type="checkbox" th:field="*{FrequentPattern}" onclick="set_mining_constraints('mining_sub_feature_2')">FrequentPattern</div>
+									<fieldset id="pattern_sub" style="display: none;">
+										<div> <input id="pattern_sub_feature_1" type="checkbox" th:field="*{Apriori}" onclick="disable_pattern_features('pattern_sub_feature_1')" > Apriori</div>	
+										<div> <input id="pattern_sub_feature_2" type="checkbox" th:field="*{FPgrowth}" onclick="disable_pattern_features('pattern_sub_feature_2')" > FP-growth</div>					
+									</fieldset>			
+							</fieldset>
+							
+						</div>
+				</fieldset>
+				
+			<h3>Dataset component</h3>
+				<div>		
+						<fieldset>
+						<legend>Data structure</legend>
+							<div> <input id="data_structure_sub_feature_1"  type="checkbox" th:field="*{TextualData}"  onclick="disable_data_features('data_structure_sub_feature_1')">TextualData</div>
+							<div> <input id="data_structure_sub_feature_2" type="checkbox" th:field="*{GraphData}" onclick="disable_data_features('data_structure_sub_feature_2')" >GraphData</div>
+							<div> <input id="data_structure_sub_feature_3" type="checkbox" th:field="*{Matrix}" onclick="disable_data_features('data_structure_sub_feature_3')" >Matrix</div>
+							<div> <input id="data_structure_sub_feature_4" type="checkbox" th:field="*{ARFF}" onclick="disable_data_features('data_structure_sub_feature_4')">ARFF</div>
+							<div> <input id="data_structure_sub_feature_5" type="checkbox" th:field="*{Tree}" onclick="disable_data_features('data_structure_sub_feature_5')">Tree</div>			
+						</fieldset>
+				</div>		
+					<div>
+					<fieldset>
+					<legend>Dataset type</legend>
+							<div> <input id="dataset_type_sub_feature_1" type="checkbox" th:field="*{UnsupervisedDataset}" onclick="disable_sub_features('dataset_type_sub_feature_1', 'dataset_type_sub_feature_2')">UnsupervisedDataset</div>
+							<div> <input id="dataset_type_sub_feature_2" type="checkbox" th:field="*{SupervisedDataset}" onclick="disable_sub_features('dataset_type_sub_feature_2', 'dataset_type_sub_feature_1')" >SupervisedDataset</div>
+					</fieldset>
+							
+				
+				</div>
+				
+				
+			<h3>Preprocessing Data Component</h3>
+				<fieldset id="preprocess_sub">
+					<div> <input id="preprocess_sub_feature_1" type="checkbox" th:field="*{NLP}" >NLP</div>
+					<div> <input id="preprocess_sub_feature_2" type="checkbox" th:field="*{FeatureScaling}" >FeatureScaling</div>
+					<div> <input id="preprocess_sub_feature_3" type="checkbox" th:field="*{Vectorization}" >Vectorization</div>
+					<div> <input id="preprocess_sub_feature_4" type="checkbox" th:field="*{DuplicatesRemoval}" >DuplicatesRemoval</div>
+					<div> <input id="preprocess_sub_feature_5" type="checkbox" th:field="*{MissingDataManipulation}"  >MissingDataManipulation</div>
+					<div> <input id="preprocess_sub_feature_6" type="checkbox" th:field="*{Normalization}" >Normalization</div>			
+				</fieldset>
+				
+				<h3>Dataset Preprocessing</h3>
+					<fieldset id="dataset_sub">
+					<div> <input id="dataset_sub_feature_1" type="checkbox" th:field="*{Pandas}" >Pandas </div>
+					<div> <input id="dataset_sub_feature_2" type="checkbox" th:field="*{Numpy}"> Numpy </div>		
+				</fieldset>
+			<h3>Evaluation Component</h3>
+				
+					<fieldset id="cross_fold_sub">
+					<legend>Cross Fold Validation</legend>
+						<div> <input id="cross_fold_sub_feature_1" type="checkbox" th:field="*{SplittingKfold}" onclick="disable_sub_features('cross_fold_sub_feature_1', 'cross_fold_sub_feature_2')">SplittingKfold</div>
+						<div> <input id="cross_fold_sub_feature_2" type="checkbox" th:field="*{RandomSpltting}" onclick="disable_sub_features('cross_fold_sub_feature_2', 'cross_fold_sub_feature_1')" >RandomSpltting</div>			
+					</fieldset>		
+					
+					
+					
+			<h3>Algorithm Library</h3>
+
+
+
+			<fieldset>
+			<div> <input id="lib_algo_sub_1" type="checkbox" th:field="*{Sklearn}" onclick="disable_lib_algo_features('lib_algo_sub_1')" >Sklearn</div>
+			<div> <input id="lib_algo_sub_2" type="checkbox" th:field="*{Surprise}" onclick="disable_lib_algo_features('lib_algo_sub_2')">Surprise</div>
+			<div> <input id="lib_algo_sub_3" type="checkbox" th:field="*{PyTorch}" onclick="disable_lib_algo_features('lib_algo_sub_3')">PyTorch</div>
+			<div> <input id="lib_algo_sub_4" type="checkbox" th:field="*{TensorFlow}" onclick="disable_lib_algo_features('lib_algo_sub_4')">TensorFlow</div>
+
+			</fieldset>
+
+			<h3>Presentation Layer</h3>
+
+
+			<fieldset id="presentation_sub">
+			<div> <input id="presentation_sub_1" type="checkbox" th:field="*{IDEPlugin}" onclick="disable_presentation_features('presentation_sub_1')" >IDE plugin</div>
+			<div> <input id="presentation_sub_2" type="checkbox" th:field="*{WebInterface}" onclick="disable_presentation_features('presentation_sub_2')">Web Interface</div>
+			<div> <input id="presentation_sub_3" type="checkbox" th:field="*{RawOutcomes}" onclick="disable_presentation_features('presentation_sub_3')">Raw outcomes</div>
+
+
+			</fieldset>
+
+			<input type="submit" value="Submit">   
+
+			
+			</form>  
+
+		</div>
+	  </div>
+	</main>
+	<footer class="pt-5 my-5 text-muted border-top">
+	  Created by MDEGroup &middot; &copy; 2022
+	</footer>
+</div>
+
+
+
+</body>
+<script>
+
+
+
+function disable_sub_features(id, id_to_disable){
+	const checkbox = document.getElementById(id)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+	    document.getElementById(id_to_disable).disabled = true;
+	  } else {		
+	    document.getElementById(id_to_disable).disabled = false;
+	  }
+		})
+		
+		check_constraints(id,checkbox)
+	}
+
+
+function show_sub_features(current) {	
+	const checkbox = document.getElementById(current)
+	console.log(current)
+		switch (current)
+			{
+			   case "algorithm_feature_parent_1":			   
+			   		var x = document.getElementById("collaborative_sub");
+			   		break;
+			   case "algorithm_feature_parent_2":
+				   	break;
+			   case "algorithm_feature_parent_3":
+				    var x = document.getElementById("classification_sub");
+				    break;
+			   case "algorithm_feature_parent_4":
+				    var x = document.getElementById("data_mining_sub");
+				    break;
+			   case "class_sub_feature_1":
+				    var x = document.getElementById("supervised_sub");
+				    break;
+			   case "class_sub_feature_2":
+				    var x = document.getElementById("unsupervised_sub");
+				    break;
+			   case "supervised_sub_feature_3":
+				    var x = document.getElementById("supervised_NN");
+				    break;
+			   case "unsupervised_sub_feature_3":
+				    var x = document.getElementById("unsupervised_NN");
+				    break;
+				    
+			   case "mining_sub_feature_2":
+				    var x = document.getElementById("pattern_sub");
+				    break;				
+			  default:
+				    break;
+				    
+			}
+		if(x){		
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+					  if (x.style.display === "none") {
+						    x.style.display = "block";
+						  } 
+				    
+				  	  }
+				  else{
+					  if (x.style.display === "block") {
+						    x.style.display = "none";
+						  } 
+				  }		  
+					})
+			
+		}
+		
+	}
+	
+
+function disable_parent(list_key,current){	
+	
+
+	const index = list_key.indexOf(current)
+	
+	if (index > -1) {
+	  list_key.splice(index, 1) 
+	}
+	
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_key.length;i++){
+			document.getElementById(list_key[i]).disabled = true;
+			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_key.length;i++){
+				document.getElementById(list_key[i]).disabled =false;		    
+				
+			}
+	  }
+	})
+	
+	check_constraints(current,checkbox)
+	
+}
+
+
+function get_list_checkboxes(){
+	var inputs = document.getElementsByTagName("input");
+	var checkboxes=[]
+	for(var i = 0; i < inputs.length; i++) {
+	    if(inputs[i].type == "checkbox") {	
+	        checkboxes.push(inputs[i].id)
+	    }  
+	}
+	return checkboxes	
+	
+}
+
+
+function get_data_structure_features(){
+	var features=[]
+	checkboxes=get_list_checkboxes()
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("data_structure")){
+	    	features.push(checkboxes[i])
+	    	
+	    }
+	}
+	return features
+	
+}
+
+function get_presentation_features(){
+	var features=[]
+	checkboxes=get_list_checkboxes()
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("presentation")){
+	    	features.push(checkboxes[i])
+	    	
+	    }
+	}
+	return features
+	
+}
+
+function get_NN_supervised_features(){
+	var features=[]
+	checkboxes=get_list_checkboxes()
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("NNS")){
+	    	features.push(checkboxes[i])
+	    	
+	    }
+	}
+	return features
+	
+}
+
+function get_NN_unsupervised_features(){
+	var features=[]
+	checkboxes=get_list_checkboxes()
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("NNU")){
+	    	features.push(checkboxes[i])
+	    	
+	    }
+	}
+	return features
+	
+}
+
+function get_pattern_features(){
+	var features=[]
+	checkboxes=get_list_checkboxes()
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("pattern")){
+	    	features.push(checkboxes[i])
+	    	
+	    }
+	}
+	return features	
+}
+
+function get_lib_algo_features(){
+	var features=[]
+	checkboxes=get_list_checkboxes()
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("lib_algo")){
+	    	features.push(checkboxes[i])
+	    	
+	    }
+	}
+	return features	
+}
+
+function disable_lib_algo_features(current){
+	list_keys= get_lib_algo_features()
+	
+	const index = list_keys.indexOf(current)
+	
+	if (index > -1) {
+	  list_keys.splice(index, 1) 
+	}
+	
+	console.log(list_keys)
+	
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled = true;			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled =false;
+			}
+	  }
+	})
+	
+	check_constraints(current, checkbox)
+	
+}
+
+
+function disable_presentation_features(current){
+	list_keys= get_presentation_features()
+	
+	const index = list_keys.indexOf(current)
+	
+	if (index > -1) {
+	  list_keys.splice(index, 1) 
+	}
+	
+	console.log(list_keys)
+	
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled = true;			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled =false;
+			}
+	  }
+	})
+	
+}
+
+
+function disable_NN_supervised_features(current){
+	list_keys= get_NN_supervised_features()
+	
+	const index = list_keys.indexOf(current)
+	
+	if (index > -1) {
+	  list_keys.splice(index, 1) 
+	}
+	
+	console.log(list_keys)
+	
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled = true;			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled =false;
+			}
+	  }
+	})
+	
+}
+
+function disable_NN_unsupervised_features(current){
+	list_keys= get_NN_unsupervised_features()
+	
+	const index = list_keys.indexOf(current)
+	
+	if (index > -1) {
+	  list_keys.splice(index, 1) 
+	}
+	
+	console.log(list_keys)
+	
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled = true;			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled =false;
+			}
+	  }
+	})	
+}
+
+function disable_pattern_features(current){
+	list_keys= get_pattern_features()
+	
+	const index = list_keys.indexOf(current)
+	
+	if (index > -1) {
+	  list_keys.splice(index, 1) 
+	}
+	
+	console.log(list_keys)
+	
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled = true;			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled =false;
+			}
+	  }
+	})	
+}
+
+function disable_data_features(current){
+	list_keys= get_data_structure_features()
+	
+	const index = list_keys.indexOf(current)
+	
+	if (index > -1) {
+	  list_keys.splice(index, 1) 
+	}
+	console.log(list_keys)
+	const checkbox = document.getElementById(current)
+	checkbox.addEventListener('change', (event) => {
+	  if (event.currentTarget.checked) {
+		  
+		for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled = true;			
+		}	    
+	  } else {			    
+		  for (var i = 0; i < list_keys.length;i++){
+			document.getElementById(list_keys[i]).disabled =false;
+			}
+	  }
+	})
+	
+	check_constraints(current,checkbox)
+	
+}
+
+function set_algorithm_constraints(id){	
+	
+	checkboxes=get_list_checkboxes()	
+	var key_parents = []		
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("algorithm")){
+	    	key_parents.push(checkboxes[i])	    	
+	    }    
+	}	
+	console.log(key_parents)	
+	disable_parent(key_parents, id)	
+	show_sub_features(id)
+	
+}
+
+function set_classifier_constraints(id){	
+	
+	checkboxes=get_list_checkboxes()	
+	var key_parents = []		
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("class")){
+	    	key_parents.push(checkboxes[i])	    	
+	    }    
+	}	
+	console.log(key_parents)	
+	disable_parent(key_parents, id)	
+	show_sub_features(id)
+	
+}
+
+function set_supervised_constraints(id){	
+	
+	checkboxes=get_list_checkboxes()	
+	var key_parents = []		
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("supervised")){
+	    	key_parents.push(checkboxes[i])	    	
+	    }    
+	}	
+	console.log(key_parents)	
+	disable_parent(key_parents, id)	
+	show_sub_features(id)		
+}
+
+function set_unsupervised_constraints(id){	
+	
+	checkboxes=get_list_checkboxes()	
+	var key_parents = []		
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("unsupervised")){
+	    	key_parents.push(checkboxes[i])	    	
+	    }    
+	}	
+	console.log(key_parents)	
+	disable_parent(key_parents, id)	
+	show_sub_features(id)		
+}
+
+function set_mining_constraints(id){	
+	
+	checkboxes=get_list_checkboxes()	
+	var key_parents = []		
+	for(var i = 0; i < checkboxes.length; i++) {	    
+	    if (checkboxes[i].includes("mining")){
+	    	key_parents.push(checkboxes[i])	    	
+	    }    
+	}	
+	console.log(key_parents)	
+	disable_parent(key_parents, id)	
+	show_sub_features(id)	
+	check_constraints(id)
+}
+
+function check_constraints(id,checkbox){
+	
+	console.log(id)
+	switch(id){
+		case  "dataset_type_sub_feature_1":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("class_sub_feature_1").disabled = true;
+				  } else {		
+				    document.getElementById("class_sub_feature_1").disabled = false;
+				  }
+					})
+		break;
+			
+			
+		case  "class_sub_feature_1":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("dataset_type_sub_feature_1").disabled = true;
+				  } else {		
+				    document.getElementById("dataset_type_sub_feature_1").disabled = false;
+				  }
+					})
+		break;	
+			
+		case  "dataset_type_sub_feature_2":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("class_sub_feature_2").disabled = true;
+				  } else {		
+				    document.getElementById("class_sub_feature_2").disabled = false;
+				  }
+					})
+		break;
+			
+			
+		case "class_sub_feature_2":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("dataset_type_sub_feature_2").disabled = true;
+				  } else {		
+				    document.getElementById("dataset_type_sub_feature_2").disabled = false;
+				  }
+					})
+		break;
+			
+			
+		case "algorithm_feature_parent_2":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("lib_algo_sub_1").disabled = true;
+				  } else {		
+				    document.getElementById("lib_algo_sub_1").disabled = false;
+				  }
+					})
+		break;	
+			
+		case "data_structure_sub_feature_2":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("preprocess_sub_feature_1").disabled = true;
+				  } else {		
+				    document.getElementById("preprocess_sub_feature_1").disabled = false;
+				  }
+					})
+		break;
+			
+		case "data_structure_sub_feature_3":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("preprocess_sub_feature_1").disabled = true;
+				  } else {		
+				    document.getElementById("preprocess_sub_feature_1").disabled = false;
+				  }
+					})
+		break;	
+			
+		case "data_structure_sub_feature_4":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("preprocess_sub_feature_1").disabled = true;
+				  } else {		
+				    document.getElementById("preprocess_sub_feature_1").disabled = false;
+				  }
+					})
+		break;
+		
+		case "data_structure_sub_feature_5":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("preprocess_sub_feature_1").disabled = true;
+				  } else {		
+				    document.getElementById("preprocess_sub_feature_1").disabled = false;
+				  }
+					})
+		break;	
+			
+			
+			
+		
+			
+		case  "algorithm_feature_parent_1":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("data_structure_sub_feature_1").disabled = true;
+				    document.getElementById("data_structure_sub_feature_2").disabled = true;
+				    document.getElementById("data_structure_sub_feature_4").disabled = true;
+				    document.getElementById("data_structure_sub_feature_5").disabled = true;
+				    document.getElementById("lib_algo_sub_1").disabled = true;
+				  } else {		
+					  document.getElementById("data_structure_sub_feature_1").disabled = false;
+					    document.getElementById("data_structure_sub_feature_2").disabled = false;
+					    document.getElementById("data_structure_sub_feature_4").disabled = false;
+					    document.getElementById("data_structure_sub_feature_5").disabled = false;
+					    document.getElementById("lib_algo_sub_1").disabled = false;
+				  }
+					})
+		break;
+			
+		case "lib_algo_sub_1":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("algorithm_feature_parent_1").disabled = true;
+				    document.getElementById("algorithm_feature_parent_2").disabled = true;
+				    document.getElementById("algorithm_feature_parent_4").disabled = true;
+				  } else {		
+					  document.getElementById("algorithm_feature_parent_1").disabled = false;
+					  document.getElementById("algorithm_feature_parent_2").disabled = false;
+					  document.getElementById("algorithm_feature_parent_4").disabled = false;
+				  }
+					})
+		break;	
+			
+		case "lib_algo_sub_2":
+			checkbox.addEventListener('change', (event) => {
+				  if (event.currentTarget.checked) {
+				    document.getElementById("algorithm_feature_parent_2").disabled = true;
+				    document.getElementById("algorithm_feature_parent_3").disabled = true;
+				    document.getElementById("algorithm_feature_parent_4").disabled = true;
+				  } else {		
+					  document.getElementById("algorithm_feature_parent_2").disabled = false;
+					  document.getElementById("algorithm_feature_parent_3").disabled = false;
+					  document.getElementById("algorithm_feature_parent_4").disabled = false;
+				  }
+					})
+		break;	
+			
+			
+	
+	}
+	
+		
+	
+	
+	
+}
+
+</script>
+</html>
