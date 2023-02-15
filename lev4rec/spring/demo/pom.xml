@@ -185,6 +185,12 @@
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-compress</artifactId>
+		    <version>1.22</version>
+		</dependency>
 
 
 
@@ -196,14 +202,6 @@
 
 
 	<repositories>
-		<repository>
-			<id>atl</id>
-			<name>ATL Repository</name>
-			<url>https://repo.eclipse.org/content/groups/atl</url>
-		</repository>
-
-
-
 		<repository>
 			<id>Eclipse - Acceleo Snapshots</id>
 			<url>https://repo.eclipse.org/content/repositories/acceleo-snapshots</url>

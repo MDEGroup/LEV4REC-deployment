@@ -2,15 +2,20 @@ package com.lev4rec.business;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
@@ -69,8 +74,22 @@ public class FeatureHandler {
 		RSModel model = (RSModel) resource.getContents().get(0);
 		return model;
 	}
+	
+	public static void compressFolderToZip(File folderToCompress, File zipFile) throws IOException {
+        FileOutputStream fos = new FileOutputStream(zipFile);
+        ZipOutputStream zos = new ZipOutputStream(fos);
+        ZipEntry entry;
+        for (File file : folderToCompress.listFiles()) {
+            entry = new ZipEntry(file.getName());
+            zos.putNextEntry(entry);
+            IOUtils.copy(new FileInputStream(file), zos);
+            zos.closeEntry();
+        }
+        zos.finish();
+        zos.close();
+    }
 
-	public static void generateFromTML(String modelUri, String folderS) {
+	public static String generateFromTML(String modelUri, String folderS) {
 
 		try {
 			List<String> arguments = new ArrayList<String>();
@@ -78,11 +97,13 @@ public class FeatureHandler {
 			File folder = new File(folderS);
 			Generate generator = new Generate(loadModel(modelUri), folder, arguments);
 			generator.doGenerate(new BasicMonitor());
+			compressFolderToZip(folder, new File("archive.zip"));
 			
 			System.out.println("Generated!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return "archive.zip";
 
 	}
 

@@ -1,6 +1,5 @@
 package com.lev4rec.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,100 +23,55 @@ import org.xtext.lev4recgrammar.first.lowcoders.RSModel;
 import com.lev4rec.business.FeatureHandler;
 import com.lev4rec.dto.RSConfiguration;
 
-
 @Controller
-public class DemoController {	
+public class DemoController {
 	@Autowired
 	FeatureHandler fh = new FeatureHandler();
-	
+
 	@RequestMapping("/")
 	public String index(Model model) {
 		RSConfiguration config = new RSConfiguration();
-		model.addAttribute("config",config);			
+		model.addAttribute("config", config);
 		return "home.html";
 	}
-	@RequestMapping(value="/dsl", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/dsl", method = RequestMethod.POST)
 	public String save(Model model, @ModelAttribute("config") RSConfiguration config) {
-		
+
 		String s = "";
 		try {
 			s = fh.getXtexString(config);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
+		}
+
 		model.addAttribute("xtext", s);
-		
+
 		return "dsl.html";
 	}
-	
-	/*@RequestMapping(value="/generate", method = RequestMethod.GET)
-	public @ResponseBody String generate(@RequestParam("user_string") String dsl_string) {	
-		
-		
-		
-		//RSModel coarse_model= GenerationHandler.loadModel("generated/demo.xmi");
-		
-		// da dsl string a xmi /  
-		
-		// Update model
-		//coarse_model.setName("KNN recsys");
-		
-		RSModel fineGrainModel = FeatureHandler.parseUserString(dsl_string);
-		
-		System.out.println("User string parsed");
-		
-		
-		FeatureHandler.serializeModel(fineGrainModel, "lev4rec/generated/demo.xmi");
-		System.out.println("Model serialized");
-		
-		
-		FeatureHandler.generateFromTML("lev4rec/generated/demo.xmi", "lev4rec/generated");			
-		
-		return "";
-	}*/
-	
-	
-	
-	@RequestMapping(path = "/generate", method = RequestMethod.GET)
-	public ResponseEntity<ByteArrayResource> download(@RequestParam("user_string") String dsl_string) throws IOException {
 
-	  
-		
-		/*RSModel coarse_model= FeatureHandler.loadModel("generated/demo.xmi");
-		coarse_model.setName("KNN recsys");
-		FeatureHandler.serializeModel(coarse_model, "generated/demo.xmi");
-		FeatureHandler.generateFromTML("generated/demo.xmi", "generated");*/	
-		
+	@RequestMapping(path = "/generate", method = RequestMethod.GET)
+	public ResponseEntity<ByteArrayResource> download(@RequestParam("user_string") String dsl_string)
+			throws IOException {
+		/*
+		 * RSModel coarse_model= FeatureHandler.loadModel("generated/demo.xmi");
+		 * coarse_model.setName("KNN recsys");
+		 * FeatureHandler.serializeModel(coarse_model, "generated/demo.xmi");
+		 * FeatureHandler.generateFromTML("generated/demo.xmi", "generated");
+		 */
 		RSModel fineGrainModel = FeatureHandler.parseUserString(dsl_string);
-		
 		System.out.println("User string parsed");
-		
-		
 		FeatureHandler.serializeModel(fineGrainModel, "demo.xmi");
 		System.out.println("Model serialized");
-		
-		
-		FeatureHandler.generateFromTML("demo.xmi", "./");		
-		
-		
-		
-		File file = new File("invalid.py");
-	    Path path = Paths.get(file.getAbsolutePath());
-	    System.out.println("juri: " + path);
-	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.set("Baeldung-Example-Header", 
-	      "Value-ResponseEntityBuilderWithHttpHeaders");
-
-	    return ResponseEntity.ok()
-	            .headers(headers)
-	            .contentLength(file.length())
-	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-	            .body(resource);
+		String filePath = FeatureHandler.generateFromTML("demo.xmi", "./");
+		Path path = Paths.get(filePath);
+		System.out.println("juri: " + path);
+		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Baeldung-Example-Header", "Value-ResponseEntityBuilderWithHttpHeaders");
+		return ResponseEntity.ok().headers(headers).contentLength(new File(filePath).length())
+				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
-	
-	
 
 }
