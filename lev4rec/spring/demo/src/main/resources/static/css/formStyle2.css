@@ -6,9 +6,6 @@ fieldset
 }
 
 
-body{
-	background-color:#ccccff;
-}
 
 .fieldset-frame{
   border-radius: 25px;
@@ -31,9 +28,9 @@ body{
 .generator {
 	display: block;
 	position: absolute;
-	top: 600px;
+	top: 300px;
 	bottom: 200px;
-	left: 500;
-	right: 500;
-	margin: 213px;
+	left: 500px;
+	right: 500px;
+	margin: 300px;
 }

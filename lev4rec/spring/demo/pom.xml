@@ -20,13 +20,6 @@
 
 	<packaging>jar</packaging>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.eclipse.acceleo/lpg.runtime.java -->
-		<dependency>
-			<groupId>org.eclipse.acceleo</groupId>
-			<artifactId>lpg.runtime.java</artifactId>
-			<version>2.0.17.v201004271640</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -41,6 +34,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.7.1</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
@@ -131,14 +132,21 @@
 		<dependency>
 			<groupId>org.lev4rec</groupId>
 			<artifactId>org.lev4rec.xtext.dsl</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.eclipse.acceleo/lpg.runtime.java -->
+		<dependency>
+			<groupId>org.eclipse.acceleo</groupId>
+			<artifactId>lpg.runtime.java</artifactId>
+			<version>2.0.17.v201004271640</version>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.lev4rec</groupId>
 			<artifactId>org.lev4rec.code.generator</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.acceleo/org.eclipse.acceleo.common -->

@@ -16,6 +16,16 @@ app.config['SWAGGER'] = {
 }
 swagger = Swagger(app)
 
+@app.route("/hello")
+def hello():
+  message = {
+            'status': 200,
+            'message': 'OK',
+            'results': res
+  }
+  return jsonify(message)
+
+
 @app.route("/recommend/<context>/<n_items>")
 def recommend(context,n_items):
     """Lev4rec endpoint

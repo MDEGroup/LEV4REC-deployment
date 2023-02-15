@@ -26,8 +26,7 @@ a:hover {
 
 .header {
 	display: block;
-	position: absolute;
-	background-color: #8080ff;
+	position: absolute;	
 	top: 0;
 	left: 0;
 	right: 0;

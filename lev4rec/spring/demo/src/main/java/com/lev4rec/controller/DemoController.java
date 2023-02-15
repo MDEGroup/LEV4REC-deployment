@@ -7,8 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,22 +15,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.lev4rec.dto.RSConfiguration;
-
 import org.xtext.lev4recgrammar.first.lowcoders.RSModel;
 //import lowcoders.RSModel;;
 
 import com.lev4rec.business.FeatureHandler;
+import com.lev4rec.dto.RSConfiguration;
 
 
 @Controller
 public class DemoController {	
+	@Autowired
+	FeatureHandler fh = new FeatureHandler();
+	
 	@RequestMapping("/")
 	public String index(Model model) {
 		RSConfiguration config = new RSConfiguration();
@@ -41,7 +39,6 @@ public class DemoController {
 	@RequestMapping(value="/dsl", method = RequestMethod.POST)
 	public String save(Model model, @ModelAttribute("config") RSConfiguration config) {
 		
-		FeatureHandler fh = new FeatureHandler();		
 		String s = "";
 		try {
 			s = fh.getXtexString(config);
@@ -102,11 +99,11 @@ public class DemoController {
 		System.out.println("Model serialized");
 		
 		
-		FeatureHandler.generateFromTML("demo.xmi", "/Users/juri/demo");		
+		FeatureHandler.generateFromTML("demo.xmi", "./");		
 		
 		
 		
-		File file = new File("/Users/juri/demo/"+ fineGrainModel.getName() + ".py");
+		File file = new File("invalid.py");
 	    Path path = Paths.get(file.getAbsolutePath());
 	    System.out.println("juri: " + path);
 	    ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));

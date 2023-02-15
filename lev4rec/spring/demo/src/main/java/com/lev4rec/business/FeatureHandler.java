@@ -1,52 +1,28 @@
 package com.lev4rec.business;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.xtext.parsetree.reconstr.impl.KeywordSerializer;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
+import org.springframework.stereotype.Service;
 //import org.springframework.ui.Model;
 import org.xml.sax.SAXException;
 import org.xtext.lev4recgrammar.first.RsDslStandaloneSetup;
 //import org.xtext.example.mydsl.MyDslStandaloneSetup;
-
-import org.xtext.lev4recgrammar.first.lowcoders.RSModel;
-import org.xtext.lev4recgrammar.first.lowcoders.RandomSplitting;
-import org.xtext.lev4recgrammar.first.lowcoders.UnsupervisedDataset;
-import org.xtext.lev4recgrammar.first.lowcoders.FilteringRS;
-import org.xtext.lev4recgrammar.first.lowcoders.LowcodersFactory;
-import org.xtext.lev4recgrammar.first.lowcoders.LowcodersPackage;
-import org.xtext.lev4recgrammar.first.lowcoders.AutomatedValidation;
-
 import org.xtext.lev4recgrammar.first.lowcoders.Bayesian;
 import org.xtext.lev4recgrammar.first.lowcoders.CrossValidation;
 import org.xtext.lev4recgrammar.first.lowcoders.DataMiningRS;
@@ -59,13 +35,15 @@ import org.xtext.lev4recgrammar.first.lowcoders.DecisionTree;
 import org.xtext.lev4recgrammar.first.lowcoders.DeepNN;
 import org.xtext.lev4recgrammar.first.lowcoders.Evaluation;
 import org.xtext.lev4recgrammar.first.lowcoders.FeedForwardNN;
-
+import org.xtext.lev4recgrammar.first.lowcoders.FilteringRS;
 import org.xtext.lev4recgrammar.first.lowcoders.FilteringRSAlgorithm;
-
+import org.xtext.lev4recgrammar.first.lowcoders.LowcodersFactory;
+import org.xtext.lev4recgrammar.first.lowcoders.LowcodersPackage;
 import org.xtext.lev4recgrammar.first.lowcoders.PreprocessingTechnique;
 import org.xtext.lev4recgrammar.first.lowcoders.PresentationLayer;
 import org.xtext.lev4recgrammar.first.lowcoders.PyLibType;
-
+import org.xtext.lev4recgrammar.first.lowcoders.RSModel;
+import org.xtext.lev4recgrammar.first.lowcoders.RandomSplitting;
 import org.xtext.lev4recgrammar.first.lowcoders.RecommendationSystem;
 import org.xtext.lev4recgrammar.first.lowcoders.RecurrentNN;
 import org.xtext.lev4recgrammar.first.lowcoders.SupervisedDataset;
@@ -79,7 +57,7 @@ import com.google.inject.Injector;
 import com.lev4rec.dto.RSConfiguration;
 
 import lev4rec.code.template.main.Generate;
-
+@Service
 public class FeatureHandler {
 
 	public static RSModel loadModel(String modelPath) {
@@ -95,16 +73,12 @@ public class FeatureHandler {
 	public static void generateFromTML(String modelUri, String folderS) {
 
 		try {
-			//Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap( ).put("*", new XMIResourceFactoryImpl());
-			EPackage.Registry.INSTANCE.put(LowcodersPackage.eNS_URI, LowcodersPackage.eINSTANCE);
-	        Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(".xmi", new XMIResourceFactoryImpl());
-	        
-
 			List<String> arguments = new ArrayList<String>();
 			System.out.print("\t" + "Generate all the files from the template...");
 			File folder = new File(folderS);
 			Generate generator = new Generate(loadModel(modelUri), folder, arguments);
 			generator.doGenerate(new BasicMonitor());
+			
 			System.out.println("Generated!");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -351,6 +325,10 @@ public class FeatureHandler {
 
 		if (config.isIDEPlugin()) {
 			presentationLayer = LowcodersFactory.eINSTANCE.createIDEIntegration();
+		}
+		
+		if (config.isJupyterNotebook()) {
+			
 		}
 		if (config.isRawOutcomes())
 			presentationLayer = LowcodersFactory.eINSTANCE.createRawOutcomes();

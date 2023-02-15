@@ -1,7 +1,7 @@
 RSModel myRsModel {
 dataset : UnsupervisedDataset datasetName {
 preprocessing [ FEATURE_SCALING ]
-datasetManipulationLibrary [ PANDAS ]
+datasetManipulationLibrary [ NUMPY ]
 path '/mypath'
 dataStructure Matrix data { }
 }

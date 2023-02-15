@@ -67,6 +67,7 @@ public class RSConfiguration {
 	private boolean WebInterface;
 	private boolean IDEPlugin;
 	private boolean RawOutcomes;
+	private boolean JupyterNotebook;
 	private boolean FeedbackComponent;
 	private boolean FeedBackType;
 	private boolean Implicit;
@@ -1043,6 +1044,13 @@ public class RSConfiguration {
 	}
 	public void setIDELibrary(boolean iDELibrary) {
 		IDELibrary = iDELibrary;
+	}
+	
+	public boolean isJupyterNotebook() {
+		return JupyterNotebook;
+	}
+	public void setJupyterNotebook(boolean jupyterNotebook) {
+		JupyterNotebook = jupyterNotebook;
 	}
 	public boolean isEclipsePlugin() {
 		return EclipsePlugin;

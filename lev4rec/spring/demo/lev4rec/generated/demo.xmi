@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
 <lowcoders:RSModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lowcoders="https://it.disim.univaq/lowcode" name="myRsModel">
   <dataset xsi:type="lowcoders:UnsupervisedDataset" name="datasetName" path="'/mypath'">
-    <preprocessing>VECTORIZATION</preprocessing>
+    <preprocessing>FEATURE_SCALING</preprocessing>
     <datasetManipulationLibrary>PANDAS</datasetManipulationLibrary>
     <dataStructure xsi:type="lowcoders:Matrix" name="data"/>
   </dataset>
-  <presentationLayer xsi:type="lowcoders:WebIService" name="presentation_layer"/>
+  <presentationLayer xsi:type="lowcoders:IDEIntegration" name="presentation_layer"/>
   <evaluation name="eval">
     <validationTechnique xsi:type="lowcoders:CrossValidation" name="cross"/>
   </evaluation>

@@ -2,7 +2,7 @@
 <head xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Content-Language" content="en-us">
-<title>Example Web Editor</title>
+<title>LEV4REC Web Editor</title>
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/xtext-ace.css}" />
 <link th:rel="stylesheet" th:href=@{/css/style.css} />
@@ -11,8 +11,8 @@
 <script th:src="@{/webjars/requirejs/2.3.6/require.min.js}"></script>
 
 <script type="text/javascript">
-	//var baseUrl = window.location.pathname;
-	var baseUrl = ""
+	//var baseUrl = window.location.pathname
+	var baseUrl = "http://localhost:8891/";
 	console.log(baseUrl);
 	var fileIndex = baseUrl.indexOf("dsl.html");
 	if (fileIndex > 0)
@@ -30,7 +30,7 @@
 		require([ "xtext/xtext-ace" ], function(xtext) {
 			xtext.createEditor({
 				baseUrl : baseUrl,
-				serviceUrl : "http://localhost:8891/xtext-service",
+				//serviceUrl : "http://localhost:8080/xtext-service",
 				syntaxDefinition : "/lev4rec/js/mode-rec.js"
 			});
 		});

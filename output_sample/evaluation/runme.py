@@ -4,7 +4,7 @@ import pandas as pd
 from surprise import Dataset
 
 if __name__ == '__main__':
-    data = Dataset.load_builtin('ml-100k')
+    data = Dataset.load_builtin('ml-100k', False)
 
 
 
