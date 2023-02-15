@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.lev4rec.business.FeatureHandler;
 import com.lev4rec.DemoApplication;
-@RunWith(SpringJUnit4ClassRunner.class)
+import com.lev4rec.business.FeatureHandler;
+
 @SpringBootTest (classes = DemoApplication.class)
 class DemoApplicationTests {
 

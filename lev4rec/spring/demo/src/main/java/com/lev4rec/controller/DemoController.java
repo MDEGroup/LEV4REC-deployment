@@ -37,7 +37,6 @@ public class DemoController {
 
 	@RequestMapping(value = "/dsl", method = RequestMethod.POST)
 	public String save(Model model, @ModelAttribute("config") RSConfiguration config) {
-
 		String s = "";
 		try {
 			s = fh.getXtexString(config);
@@ -45,9 +44,7 @@ public class DemoController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		model.addAttribute("xtext", s);
-
 		return "dsl.html";
 	}
 
@@ -64,9 +61,8 @@ public class DemoController {
 		System.out.println("User string parsed");
 		FeatureHandler.serializeModel(fineGrainModel, "demo.xmi");
 		System.out.println("Model serialized");
-		String filePath = FeatureHandler.generateFromTML("demo.xmi", "./");
+		String filePath = FeatureHandler.generateFromTML("demo.xmi", "./temp/");
 		Path path = Paths.get(filePath);
-		System.out.println("juri: " + path);
 		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Baeldung-Example-Header", "Value-ResponseEntityBuilderWithHttpHeaders");

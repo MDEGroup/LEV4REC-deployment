@@ -203,6 +203,11 @@
 
 	<repositories>
 		<repository>
+			<id>atl</id>
+			<name>ATL Repository</name>
+			<url>https://repo.eclipse.org/content/groups/atl</url>
+		</repository>
+		<repository>
 			<id>Eclipse - Acceleo Snapshots</id>
 			<url>https://repo.eclipse.org/content/repositories/acceleo-snapshots</url>
 		</repository>

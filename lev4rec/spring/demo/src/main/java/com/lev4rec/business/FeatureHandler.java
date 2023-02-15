@@ -344,16 +344,13 @@ public class FeatureHandler {
 			presentationLayer = webInterface;
 		}
 
-		if (config.isIDEPlugin()) {
+		if (config.isIDEPlugin()) 
 			presentationLayer = LowcodersFactory.eINSTANCE.createIDEIntegration();
-		}
 		
-		if (config.isJupyterNotebook()) {
-			
-		}
+		if (config.isJupyterNotebook()) 
+			presentationLayer = LowcodersFactory.eINSTANCE.createJupyterNotebook();
 		if (config.isRawOutcomes())
 			presentationLayer = LowcodersFactory.eINSTANCE.createRawOutcomes();
-
 		presentationLayer.setName("presentation_layer");
 		return presentationLayer;
 	}

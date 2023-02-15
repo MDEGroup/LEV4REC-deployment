@@ -1,9 +1,9 @@
 RSModel myRsModel {
-dataset : UnsupervisedDataset datasetName {
+dataset : SupervisedDataset datasetName {
 preprocessing [ FEATURE_SCALING ]
-datasetManipulationLibrary [ NUMPY ]
+datasetManipulationLibrary [ PANDAS ]
 path '/mypath'
-dataStructure Matrix data { }
+dataStructure Matrix data { } dependatVariable Variable user { type String dataSource File file { } }
 }
 presentationLayer : IDEIntegration presentation_layer { } evaluation : Evaluation eval {
 validationTechnique [ CrossValidation cross { nOfRecommendations 0 } ]
