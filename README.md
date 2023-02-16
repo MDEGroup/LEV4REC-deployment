@@ -6,7 +6,7 @@ You should follow the following steps to run this setup:
 1. (Re)Build the docker images using: 
 
 	`docker-compose build`
-2. Run the crossminer plaftorm using: 
+2. Run the LEV4REC plaftorm using: 
 
 	`docker-compose up` 
 	
