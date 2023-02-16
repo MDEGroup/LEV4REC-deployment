@@ -10,7 +10,7 @@ You should follow the following steps to run this setup:
 
 	`docker-compose up` 
 	
-	Please notice that for this setup we are using an empty mongodb database for oss-db
+	Please notice that the last command can take more than 5 minutes. It needs to dowload all the dependecies.
 1. Access to the LEV4Rec web app by using the following address in the web browser: 
 [http://localhost:8891/lev4rec/](http://localhost:8891/lev4rec/)
 
