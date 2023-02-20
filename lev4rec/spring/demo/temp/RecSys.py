@@ -1,7 +1,4 @@
 
-
-
-
 def load_dataset():
 from surprise import Dataset, Reader
 
@@ -14,11 +11,6 @@ from surprise import Dataset, Reader
 
 
 def set_preprocessing():
-	from sklearn.preprocessing import StandardScaler
-	sc = StandardScaler()
-	X_train = sc.fit_transform(X_split)
-	X_test = sc.transform(X_test)
-
 	return preprocess
 def algorithm_settings():
 	is_user_based=False
@@ -38,11 +30,6 @@ def run_cross_fold():
 	from collections import defaultdict
 	kf = KFold(n_splits=n_splits)
 
-	from sklearn.preprocessing import StandardScaler
-	sc = StandardScaler()
-	X_train = sc.fit_transform(X_split)
-	X_test = sc.transform(X_test)
-
 
 
 
@@ -59,8 +46,5 @@ def run_cross_fold():
     # Precision and recall can then be averaged over all users
     print(precision)
     print(recall)
-
-
-
 
 

@@ -46,6 +46,7 @@
 			<h1>LEV4REC Web Editor</h1>
 
 		</div>
+		
 		<div class="content">
 			<div id="xtext-editor" data-editor-xtext-lang="rec"
 				th:utext="${xtext}">></div>
@@ -60,7 +61,8 @@
 
 	<div class="generator">
 		<input type="button"  class = "button" value="Generate Code"
-			onclick="get_user_string('xtext-editor')" />
+			onclick="get_user_string('xtext-editor')"/> 
+		<div>Please save the file with zip extension. The archive consists of all the files for playing with the generated docker images.</div> 
 	</div>
 
 

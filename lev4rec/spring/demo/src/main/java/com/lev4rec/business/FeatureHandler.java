@@ -62,10 +62,11 @@ import com.google.inject.Injector;
 import com.lev4rec.dto.RSConfiguration;
 
 import lev4rec.code.template.main.Generate;
+
 @Service
 public class FeatureHandler {
 
-	public static RSModel loadModel(String modelPath) {
+	public RSModel loadModel(String modelPath) {
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getPackageRegistry().put(LowcodersPackage.eINSTANCE.getNsURI(), LowcodersPackage.eINSTANCE);
@@ -74,37 +75,44 @@ public class FeatureHandler {
 		RSModel model = (RSModel) resource.getContents().get(0);
 		return model;
 	}
+
+	public void compressFolderToZip(String folderToCompress, File zipFile) throws IOException {
+		File ftc = new File(folderToCompress);
+		FileOutputStream fos = new FileOutputStream(zipFile);
+		ZipOutputStream zos = new ZipOutputStream(fos);
+		ZipEntry entry;
+		for (File file : ftc.listFiles()) {
+			entry = new ZipEntry(file.getName());
+			zos.putNextEntry(entry);
+			IOUtils.copy(new FileInputStream(file), zos);
+			zos.closeEntry();
+		}
+		zos.finish();
+		zos.close();
+	}
 	
-	public static void compressFolderToZip(File folderToCompress, File zipFile) throws IOException {
-        FileOutputStream fos = new FileOutputStream(zipFile);
-        ZipOutputStream zos = new ZipOutputStream(fos);
-        ZipEntry entry;
-        for (File file : folderToCompress.listFiles()) {
-            entry = new ZipEntry(file.getName());
-            zos.putNextEntry(entry);
-            IOUtils.copy(new FileInputStream(file), zos);
-            zos.closeEntry();
-        }
-        zos.finish();
-        zos.close();
-    }
+	public void generateDocker(String dlsText, String TEMP_MODEL_PATH, String TEMP_FOLDER_PATH, String archiveFilePath) {
+		RSModel fineGrainModel = parseUserString(dlsText);
+		System.out.println("User string parsed");
+		generateDockerFiles(fineGrainModel, TEMP_FOLDER_PATH);
+		try {
+			compressFolderToZip(TEMP_FOLDER_PATH, new File(archiveFilePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-	public static String generateFromTML(String modelUri, String folderS) {
-
+	public void generateDockerFiles(RSModel model, String folderS) {
 		try {
 			List<String> arguments = new ArrayList<String>();
 			System.out.print("\t" + "Generate all the files from the template...");
 			File folder = new File(folderS);
-			Generate generator = new Generate(loadModel(modelUri), folder, arguments);
+			Generate generator = new Generate(model, folder, arguments);
 			generator.doGenerate(new BasicMonitor());
-			compressFolderToZip(folder, new File("archive.zip"));
-			
-			System.out.println("Generated!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "archive.zip";
-
 	}
 
 	public FeatureHandler() {
@@ -130,38 +138,24 @@ public class FeatureHandler {
 
 		return model;
 	}
-	
-
-	
-	
 
 	public Dataset getDataSet(RSConfiguration config) {
 
 		Dataset dataset = null;
 
-		if (config.isUnsupervisedDataset()) {
-			dataset = LowcodersFactory.eINSTANCE.createUnsupervisedDataset();			
+		if (config.isUnsupervisedDataset()) 
+			dataset = LowcodersFactory.eINSTANCE.createUnsupervisedDataset();
 
-		}
-		if (config.isSupervisedDataset()) {
-			dataset =  LowcodersFactory.eINSTANCE.createSupervisedDataset();
-		}
-		
+		if (config.isSupervisedDataset()) 
+			dataset = LowcodersFactory.eINSTANCE.createSupervisedDataset();
 		if (dataset instanceof SupervisedDataset) {
-			Variable var = LowcodersFactory.eINSTANCE.createVariable();	
-			
+			Variable var = LowcodersFactory.eINSTANCE.createVariable();
 			var.setName("user");
-			
 			DataSource data = LowcodersFactory.eINSTANCE.createFile();
-			
 			data.setName("file");
-			
 			var.setDataSource(data);
-			
-			//label.setDataSource(LowcodersFactory.eINSTANCE.createDataSource());
-			
 			((SupervisedDataset) dataset).setDependatVariable(var);
-			
+
 		}
 
 		dataset.setName("datasetName");
@@ -185,10 +179,9 @@ public class FeatureHandler {
 			if (config.isTextualData())
 				dataStructure = LowcodersFactory.eINSTANCE.createMatrix();
 
-			if (dataStructure != null) {
+			if (dataStructure != null) 
 				dataset.setDataStructure(dataStructure);
-			}
-
+			
 			dataStructure.setName("data");
 			dataset.setDataStructure(dataStructure);
 
@@ -335,7 +328,7 @@ public class FeatureHandler {
 
 	public PresentationLayer getPresentationLayer(RSConfiguration config) {
 		PresentationLayer presentationLayer = null;
-		if (config.isWebInterface()) {
+		if (config.isWebApplication()) {
 			WebIService webInterface = LowcodersFactory.eINSTANCE.createWebIService();
 			if (config.isFlask())
 				webInterface.setLibrary(WebInterfaceLibrary.FLASK);
@@ -344,10 +337,10 @@ public class FeatureHandler {
 			presentationLayer = webInterface;
 		}
 
-		if (config.isIDEPlugin()) 
+		if (config.isIDEPlugin())
 			presentationLayer = LowcodersFactory.eINSTANCE.createIDEIntegration();
-		
-		if (config.isJupyterNotebook()) 
+
+		if (config.isJupyterNotebook())
 			presentationLayer = LowcodersFactory.eINSTANCE.createJupyterNotebook();
 		if (config.isRawOutcomes())
 			presentationLayer = LowcodersFactory.eINSTANCE.createRawOutcomes();
@@ -376,17 +369,16 @@ public class FeatureHandler {
 		}
 	}
 
-	public static Resource writeXtextString(RSConfiguration rsConf, String path) {
+	public Resource writeXtextString(RSConfiguration rsConf, String path) {
 
 		Injector injector = new RsDslStandaloneSetup().createInjectorAndDoEMFRegistration();
 
 		ResourceSet rs = injector.getInstance(ResourceSet.class);
 		Resource r = rs.createResource(URI.createURI(path));
-		FeatureHandler fh = new FeatureHandler();
 		RSModel m = LowcodersFactory.eINSTANCE.createRSModel();
 
 		try {
-			m = fh.generate(rsConf);
+			m = generate(rsConf);
 		} catch (ParserConfigurationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

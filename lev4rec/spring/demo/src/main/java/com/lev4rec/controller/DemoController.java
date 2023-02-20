@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,10 @@ import com.lev4rec.dto.RSConfiguration;
 
 @Controller
 public class DemoController {
+	private static final String TEMP_ARCHIVE_PATH = "archive.zip";
+	private static final String TEMP_FOLDER_PATH = "./temp";
+	private static final String TEMP_MODEL_PATH = "model.xmi";
+
 	@Autowired
 	FeatureHandler fh = new FeatureHandler();
 
@@ -52,21 +57,18 @@ public class DemoController {
 	public ResponseEntity<ByteArrayResource> download(@RequestParam("user_string") String dsl_string)
 			throws IOException {
 		/*
-		 * RSModel coarse_model= FeatureHandler.loadModel("generated/demo.xmi");
+		 * RSModel coarse_model= FeatureHandler.loadModel(TEMP_MODEL_PATH);
 		 * coarse_model.setName("KNN recsys");
-		 * FeatureHandler.serializeModel(coarse_model, "generated/demo.xmi");
+		 * FeatureHandler.serializeModel(coarse_model, TEMP_MODEL_PATH);
 		 * FeatureHandler.generateFromTML("generated/demo.xmi", "generated");
 		 */
-		RSModel fineGrainModel = FeatureHandler.parseUserString(dsl_string);
-		System.out.println("User string parsed");
-		FeatureHandler.serializeModel(fineGrainModel, "demo.xmi");
-		System.out.println("Model serialized");
-		String filePath = FeatureHandler.generateFromTML("demo.xmi", "./temp/");
-		Path path = Paths.get(filePath);
+		FileUtils.cleanDirectory(new File(TEMP_FOLDER_PATH));
+		fh.generateDocker(dsl_string, TEMP_MODEL_PATH, TEMP_FOLDER_PATH, TEMP_ARCHIVE_PATH);
+		Path path = Paths.get(TEMP_ARCHIVE_PATH);
 		ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Baeldung-Example-Header", "Value-ResponseEntityBuilderWithHttpHeaders");
-		return ResponseEntity.ok().headers(headers).contentLength(new File(filePath).length())
+		return ResponseEntity.ok().headers(headers).contentLength(new File(TEMP_ARCHIVE_PATH).length())
 				.contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
 	}
 

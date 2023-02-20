@@ -64,7 +64,7 @@ public class RSConfiguration {
 	private boolean Competence;
 	private boolean UserIntention;
 	private boolean PresentationComponent;
-	private boolean WebInterface;
+	private boolean WebApplication;
 	private boolean IDEPlugin;
 	private boolean RawOutcomes;
 	private boolean JupyterNotebook;
@@ -547,11 +547,11 @@ public class RSConfiguration {
 	public void setPresentationComponent(boolean presentationComponent) {
 		PresentationComponent = presentationComponent;
 	}
-	public boolean isWebInterface() {
-		return WebInterface;
+	public boolean isWebApplication() {
+		return WebApplication;
 	}
-	public void setWebInterface(boolean webInterface) {
-		WebInterface = webInterface;
+	public void setWebApplication(boolean webApplication) {
+		WebApplication = webApplication;
 	}
 	public boolean isIDEPlugin() {
 		return IDEPlugin;

@@ -9,11 +9,11 @@
 		<version>2.6.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>org.lev4rec</groupId>
+	<artifactId>lev4rec.spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>lev4rec-spring</name>
+	<description>LEV4REC spring project</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -33,13 +33,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.7.1</version>
 		</dependency>
 
 
@@ -103,12 +96,9 @@
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext</artifactId>
 			<version>2.26.0</version>
-
-
 		</dependency>
 
 		<dependency>
-
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>
@@ -120,14 +110,11 @@
 			<version>3.12.0</version>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>org.eclipse.acceleo</groupId>
 			<artifactId>org.eclipse.acceleo.engine</artifactId>
 			<version>3.5.0-SNAPSHOT</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.lev4rec</groupId>
@@ -135,21 +122,18 @@
 			<version>1.0.2</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.eclipse.acceleo/lpg.runtime.java -->
 		<dependency>
 			<groupId>org.eclipse.acceleo</groupId>
 			<artifactId>lpg.runtime.java</artifactId>
 			<version>2.0.17.v201004271640</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.lev4rec</groupId>
 			<artifactId>org.lev4rec.code.generator</artifactId>
-			<version>1.0.2</version>
+			<version>1.0.3</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.eclipse.acceleo/org.eclipse.acceleo.common -->
 		<dependency>
 			<groupId>org.eclipse.acceleo</groupId>
 			<artifactId>org.eclipse.acceleo.common</artifactId>
@@ -215,7 +199,6 @@
 			<id>Eclipse - Acceleo Release</id>
 			<url>https://repo.eclipse.org/content/repositories/acceleo-releases</url>
 		</repository>
-
 
 	</repositories>
 
