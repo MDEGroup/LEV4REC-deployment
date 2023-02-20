@@ -39,9 +39,40 @@ public class DemoController {
 		model.addAttribute("config", config);
 		return "home.html";
 	}
+	
+	
+	@RequestMapping("/knn")
+	public String indexKnn(Model model) {
+		RSConfiguration config = new RSConfiguration();
+		model.addAttribute("config", config);
+		return "homeKNN.html";
+	}
+	
+	
+	@RequestMapping("/ml")
+	public String indexML(Model model) {
+		RSConfiguration config = new RSConfiguration();
+		model.addAttribute("config", config);
+		return "homeML.html";
+	}
+
 
 	@RequestMapping(value = "/dsl", method = RequestMethod.POST)
 	public String save(Model model, @ModelAttribute("config") RSConfiguration config) {
+		String s = "";
+		try {
+			s = fh.getXtexString(config);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("xtext", s);
+		return "dsl.html";
+	}
+	
+	
+	@RequestMapping(value = "/dslKNN", method = RequestMethod.POST)
+	public String saveKNN(Model model, @ModelAttribute("config") RSConfiguration config) {
 		String s = "";
 		try {
 			s = fh.getXtexString(config);
