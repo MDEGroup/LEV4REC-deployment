@@ -2,7 +2,7 @@
 <html xmlns:th="https://thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>LEV4REC -AURORA use case</title>
+<title>LEV4REC - AURORA use case</title>
 <link th:rel="stylesheet" th:href=@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}/>
 
 <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
@@ -11,7 +11,7 @@
 
 		<script type="text/javascript">
 		//var baseUrl = window.location.pathname;
-		var baseUrl = "http://localhost:8888/"
+		var baseUrl = "http://localhost:8891/"
 		console.log(baseUrl);
 		var fileIndex = baseUrl.indexOf("dslKNN.html");
 		if (fileIndex > 0)
@@ -154,7 +154,7 @@ fieldset {
 				<fieldset id="preprocess_sub">
 					<div> <input id="preprocess_sub_feature_1" type="checkbox" th:field="*{NLP}" disabled>NLP</div>
 					<div> <input id="preprocess_sub_feature_2" type="checkbox" th:field="*{FeatureScaling}" disabled>FeatureScaling</div>
-					<div> <input id="preprocess_sub_feature_3" type="checkbox" th:field="*{Vectorization}" >Vectorization</div>
+					<div> <input id="preprocess_sub_feature_3" type="checkbox" th:field="*{Vectorization}" checked >Vectorization</div>
 					<div> <input id="preprocess_sub_feature_4" type="checkbox" th:field="*{DuplicatesRemoval}" disabled>DuplicatesRemoval</div>
 					<div> <input id="preprocess_sub_feature_5" type="checkbox" th:field="*{MissingDataManipulation}" disabled >MissingDataManipulation</div>
 					<div> <input id="preprocess_sub_feature_6" type="checkbox" th:field="*{Normalization}" disabled>Normalization</div>			

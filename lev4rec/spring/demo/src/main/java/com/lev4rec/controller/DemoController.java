@@ -41,7 +41,7 @@ public class DemoController {
 	}
 	
 	
-	@RequestMapping("/knn")
+	@RequestMapping("/knn/")
 	public String indexKnn(Model model) {
 		RSConfiguration config = new RSConfiguration();
 		model.addAttribute("config", config);
@@ -49,7 +49,7 @@ public class DemoController {
 	}
 	
 	
-	@RequestMapping("/ml")
+	@RequestMapping("/ml/")
 	public String indexML(Model model) {
 		RSConfiguration config = new RSConfiguration();
 		model.addAttribute("config", config);

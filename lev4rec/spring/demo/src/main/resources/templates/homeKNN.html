@@ -11,9 +11,9 @@
 
 		<script type="text/javascript">
 		//var baseUrl = window.location.pathname;
-		var baseUrl = "http://localhost:8888/"
+		var baseUrl = "http://localhost:8891/"
 		console.log(baseUrl);
-		var fileIndex = baseUrl.indexOf("dslKNN.html");
+		var fileIndex = baseUrl.indexOf("dsl.html");
 		if (fileIndex > 0)
 			baseUrl = baseUrl.slice(0, fileIndex);
 		require.config({
@@ -33,6 +33,9 @@
 				});
 			});
 		});
+		
+		
+		
 	</script> 
 	
 
@@ -63,14 +66,14 @@ fieldset {
   
 	  <div class="row g-5">
 		<div class="col-md-12">
-			<form id="checkForm" th:action="@{/dsl}" method="post" th:object="${config}" >  
+			<form id="checkForm" th:action="@{/dslKNN}" method="post" th:object="${config}" >  
 			<h3>Algorithm Component</h3>  
 				<fieldset>	
 						<div >        
-						<input id="algorithm_feature_parent_1" type="checkbox" th:field="*{CollaborativeFiltering}" onclick="set_algorithm_constraints('algorithm_feature_parent_1')"> <label>Collaborative filtering </label>
-							<fieldset id="collaborative_sub" style="display: none;">        
-								<div><input id="coll_sub_feature_1" type="checkbox" th:field="*{ItemBased}" onclick="disable_sub_features('coll_sub_feature_1', 'coll_sub_feature_2')"> Item based </div>		
-								<div> <input id="coll_sub_feature_2"  type="checkbox" th:field="*{UserBased}" onclick="disable_sub_features('coll_sub_feature_2', 'coll_sub_feature_1')" > User Based  </div>
+						<input id="algorithm_feature_parent_1" type="checkbox" th:field="*{CollaborativeFiltering}" disabled> <label>Collaborative filtering </label>
+							<fieldset id="collaborative_sub" >        
+								<div><input id="coll_sub_feature_1" type="checkbox" th:field="*{ItemBased}" onclick="disable_sub_features('coll_sub_feature_1', 'coll_sub_feature_2')" disabled > Item based </div>		
+								<div> <input id="coll_sub_feature_2"  type="checkbox" th:field="*{UserBased}" checked > User Based  </div>
 							</fieldset>
 						</div>
 				
@@ -134,7 +137,7 @@ fieldset {
 						<legend>Data structure</legend>
 							<div> <input id="data_structure_sub_feature_1"  type="checkbox" th:field="*{TextualData}"  onclick="disable_data_features('data_structure_sub_feature_1')" disabled>TextualData</div>
 							<div> <input id="data_structure_sub_feature_2" type="checkbox" th:field="*{GraphData}" onclick="disable_data_features('data_structure_sub_feature_2')" disabled>GraphData</div>
-							<div> <input id="data_structure_sub_feature_3" type="checkbox" th:field="*{Matrix}" onclick="disable_data_features('data_structure_sub_feature_3')" >Matrix</div>
+							<div> <input id="data_structure_sub_feature_3" type="checkbox" th:field="*{Matrix}" checked="checked" > Matrix</div>
 							<div> <input id="data_structure_sub_feature_4" type="checkbox" th:field="*{ARFF}" onclick="disable_data_features('data_structure_sub_feature_4')" disabled>ARFF</div>
 							<div> <input id="data_structure_sub_feature_5" type="checkbox" th:field="*{Tree}" onclick="disable_data_features('data_structure_sub_feature_5')" disabled>Tree</div>			
 						</fieldset>
@@ -143,7 +146,7 @@ fieldset {
 					<fieldset>
 					<legend>Dataset type</legend>
 							<div> <input id="dataset_type_sub_feature_1" type="checkbox" th:field="*{UnsupervisedDataset}" onclick="disable_sub_features('dataset_type_sub_feature_1', 'dataset_type_sub_feature_2')" disabled>UnsupervisedDataset</div>
-							<div> <input id="dataset_type_sub_feature_2" type="checkbox" th:field="*{SupervisedDataset}" onclick="disable_sub_features('dataset_type_sub_feature_2', 'dataset_type_sub_feature_1')" >SupervisedDataset</div>
+							<div> <input id="dataset_type_sub_feature_2" type="checkbox" th:field="*{SupervisedDataset}"  checked="checked" >SupervisedDataset</div>
 					</fieldset>
 							
 				
@@ -162,14 +165,14 @@ fieldset {
 				
 				<h3>Dataset Preprocessing</h3>
 					<fieldset id="dataset_sub">
-					<div> <input id="dataset_sub_feature_1" type="checkbox" th:field="*{Pandas}" >Pandas </div>
+					<div> <input id="dataset_sub_feature_1" type="checkbox" th:field="*{Pandas}" checked="checked"  >Pandas </div>
 					<div> <input id="dataset_sub_feature_2" type="checkbox" th:field="*{Numpy}" disabled> Numpy </div>		
 				</fieldset>
 			<h3>Evaluation Component</h3>
 				
 					<fieldset id="cross_fold_sub">
 					<legend>Cross Fold Validation</legend>
-						<div> <input id="cross_fold_sub_feature_1" type="checkbox" th:field="*{SplittingKfold}" onclick="disable_sub_features('cross_fold_sub_feature_1', 'cross_fold_sub_feature_2')">SplittingKfold</div>
+						<div> <input id="cross_fold_sub_feature_1" type="checkbox" th:field="*{SplittingKfold}"  checked="checked" >SplittingKfold</div>
 						<div> <input id="cross_fold_sub_feature_2" type="checkbox" th:field="*{RandomSpltting}" onclick="disable_sub_features('cross_fold_sub_feature_2', 'cross_fold_sub_feature_1')" disabled>RandomSpltting</div>			
 					</fieldset>		
 					
@@ -181,7 +184,7 @@ fieldset {
 
 			<fieldset>
 			<div> <input id="lib_algo_sub_1" type="checkbox" th:field="*{Sklearn}" onclick="disable_lib_algo_features('lib_algo_sub_1')" disabled>Sklearn</div>
-			<div> <input id="lib_algo_sub_2" type="checkbox" th:field="*{Surprise}" onclick="disable_lib_algo_features('lib_algo_sub_2')">Surprise</div>
+			<div> <input id="lib_algo_sub_2" type="checkbox" th:field="*{Surprise}" checked="true"  >Surprise</div>
 			<div> <input id="lib_algo_sub_3" type="checkbox" th:field="*{PyTorch}" onclick="disable_lib_algo_features('lib_algo_sub_3')" disabled>PyTorch</div>
 			<div> <input id="lib_algo_sub_4" type="checkbox" th:field="*{TensorFlow}" onclick="disable_lib_algo_features('lib_algo_sub_4')" disabled>TensorFlow</div>
 
@@ -191,7 +194,7 @@ fieldset {
 
 
 			<fieldset id="presentation_sub">
-			<div> <input id="presentation_sub_1" type="checkbox" th:field="*{RawOutcomes}" onclick="disable_presentation_features('presentation_sub_1')" >Raw outcomes</div>
+			<div> <input id="presentation_sub_1" type="checkbox" th:field="*{RawOutcomes}"  checked="checked"  >Raw outcomes</div>
 			<div> <input id="presentation_sub_2" type="checkbox" th:field="*{JupyterNotebook}" onclick="disable_presentation_features('presentation_sub_2')" disabled>Jupyter Notebook</div>
 			<div> <input id="presentation_sub_3" type="checkbox" th:field="*{WebApplication}" onclick="disable_presentation_features('presentation_sub_3')" disabled>Web Interface</div>
 
@@ -435,6 +438,7 @@ function disable_lib_algo_features(current){
 	check_constraints(current, checkbox)
 	
 }
+
 
 
 function disable_presentation_features(current){
