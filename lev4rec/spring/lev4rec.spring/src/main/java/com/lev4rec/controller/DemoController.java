@@ -90,6 +90,8 @@ public class DemoController {
 	@RequestMapping("/knn/")
 	public String indexKnn(Model model) {
 		RSConfiguration config = new RSConfiguration();
+		config.setCollaborativeFiltering(true);
+		config.setItemBased(true);
 		/*TODO Claudio qui setta l'ogetto config.*/
 		model.addAttribute("config", config);
 		return "homeKNN.html";
@@ -99,6 +101,8 @@ public class DemoController {
 	@RequestMapping("/ml/")
 	public String indexML(Model model) {
 		RSConfiguration config = new RSConfiguration();
+		config.setCollaborativeFiltering(true);
+		config.setItemBased(true);
 		/*TODO Claudio qui setta l'ogetto config.*/
 		model.addAttribute("config", config);
 		return "homeML.html";
