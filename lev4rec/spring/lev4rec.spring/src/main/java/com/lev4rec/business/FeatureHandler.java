@@ -54,6 +54,7 @@ import org.xtext.lev4recgrammar.first.lowcoders.RecurrentNN;
 import org.xtext.lev4recgrammar.first.lowcoders.SupervisedDataset;
 import org.xtext.lev4recgrammar.first.lowcoders.ValidationLibrary;
 import org.xtext.lev4recgrammar.first.lowcoders.Variable;
+import org.xtext.lev4recgrammar.first.lowcoders.WebApplication;
 import org.xtext.lev4recgrammar.first.lowcoders.WebIService;
 import org.xtext.lev4recgrammar.first.lowcoders.WebInterfaceLibrary;
 
@@ -329,7 +330,7 @@ public class FeatureHandler {
 	public PresentationLayer getPresentationLayer(RSConfiguration config) {
 		PresentationLayer presentationLayer = null;
 		if (config.isWebApplication()) {
-			WebIService webInterface = LowcodersFactory.eINSTANCE.createWebIService();
+			WebApplication webInterface = LowcodersFactory.eINSTANCE.createWebApplication();
 			if (config.isFlask())
 				webInterface.setLibrary(WebInterfaceLibrary.FLASK);
 			if (config.isSpring())
