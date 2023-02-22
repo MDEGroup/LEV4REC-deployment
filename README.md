@@ -1,6 +1,6 @@
 # LEV4REC-deployment
 This repository contains the Docker configuration files for the deployment of Scava platform
-The suorce code and development support is available at [https://github.com/MDEGroup/LEV4REC-Tool/](https://github.com/MDEGroup/LEV4REC-Tool)
+The source code and development support is available at [https://github.com/MDEGroup/LEV4REC-Tool/](https://github.com/MDEGroup/LEV4REC-Tool)
 You should follow the following steps to run this setup:
 
 1. (Re)Build the docker images using: 
@@ -10,7 +10,8 @@ You should follow the following steps to run this setup:
 
 	`docker-compose up` 
 	
-	Please notice that the last command can take more than 5 minutes. It needs to dowload all the dependecies.
+Please notice that the last command can take more than 5 minutes. It needs to dowload all the dependecies.
+
 1. Access to the LEV4Rec web app by using the following address in the web browser: 
 [http://localhost:8891/lev4rec/](http://localhost:8891/lev4rec/)
 
