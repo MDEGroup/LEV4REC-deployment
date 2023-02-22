@@ -124,14 +124,24 @@ public class DemoController {
 	
 	@RequestMapping(value = "/dslKNN", method = RequestMethod.POST)
 	public String saveKNN(Model model, @ModelAttribute("config") RSConfiguration config) {
-		
+		String s = "";
+		try {
+			s = fh.getXtexString(config);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		model.addAttribute("xtext", knn);
 		return "dslKNN.html";
 	}
 	
 	@RequestMapping(value = "/dslML", method = RequestMethod.POST)
 	public String saveML(Model model, @ModelAttribute("config") RSConfiguration config) {
-		
+		String s = "";
+		try {
+			s = fh.getXtexString(config);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		model.addAttribute("xtext", ml);
 		return "dslML.html";
 	}
