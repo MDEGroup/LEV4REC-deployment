@@ -1,11 +1,11 @@
 RSModel myRsModel {
-dataset : UnsupervisedDataset datasetName {
-preprocessing [ NORMALIZATION ]
+dataset : SupervisedDataset datasetName {
+preprocessing [ FEATURE_SCALING ]
 datasetManipulationLibrary [ PANDAS ]
 path '/mypath'
-dataStructure Matrix data { }
+dataStructure Matrix data { } dependatVariable Variable user { type String dataSource File file { } }
 }
-presentationLayer : RawOutcomes presentation_layer { } evaluation : Evaluation eval {
+presentationLayer : JupyterNotebook presentation_layer { } evaluation : Evaluation eval {
 validationTechnique [ CrossValidation cross { nOfRecommendations 0 } ]
 } recommendationSystem : FilteringRS recsys {
 generator SURPRISE filteringRSAlgorithm ITEM_BASED }
