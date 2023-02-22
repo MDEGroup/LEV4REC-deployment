@@ -433,6 +433,7 @@ public class FeatureHandler {
 	public static RSModel parseUserString(String dslString) {
 
 		String cleanSplitted = dslString.replace("X", "");
+		cleanSplitted = cleanSplitted.replace("1234567891011121314151617181920212223242526","");
 		RSModel model = fromStringToModel(cleanSplitted);
 
 		return model;

@@ -26,6 +26,31 @@ import com.lev4rec.dto.RSConfiguration;
 
 @Controller
 public class DemoController {
+	private String ml = "RSModel myRsModel {\r\n"
+			+ "dataset : SupervisedDataset datasetName {\r\n"
+			+ "preprocessing [ FEATURE_SCALING ]\r\n"
+			+ "datasetManipulationLibrary [ PANDAS ]\r\n"
+			+ "path '/mypath'\r\n"
+			+ "dataStructure Matrix data { } dependatVariable Variable user { type String dataSource File file { } }\r\n"
+			+ "}\r\n"
+			+ "presentationLayer : JupyterNotebook presentation_layer { } evaluation : Evaluation eval {\r\n"
+			+ "validationTechnique [ CrossValidation cross { nOfRecommendations 0 } ]\r\n"
+			+ "} recommendationSystem : FilteringRS recsys {\r\n"
+			+ "generator SURPRISE filteringRSAlgorithm ITEM_BASED }\r\n"
+			+ "}";
+	
+	private String knn = "RSModel myRsModel {\r\n"
+			+ "dataset : SupervisedDataset datasetName {\r\n"
+			+ "preprocessing [ VECTORIZATION ]\r\n"
+			+ "datasetManipulationLibrary [ PANDAS ]\r\n"
+			+ "path '/mypath'\r\n"
+			+ "dataStructure Matrix data { } dependatVariable Variable user { type String dataSource File file { } }\r\n"
+			+ "}\r\n"
+			+ "presentationLayer : WebApplication presentation_layer { } evaluation : Evaluation eval {\r\n"
+			+ "validationTechnique [ CrossValidation cross { nOfRecommendations 0 } ]\r\n"
+			+ "} recommendationSystem : FeedForwardNN recsys {\r\n"
+			+ "}\r\n"
+			+ "}";
 	private static final String TEMP_ARCHIVE_PATH = "archive.zip";
 	private static final String TEMP_FOLDER_PATH = "./temp";
 	private static final String TEMP_MODEL_PATH = "model.xmi";
@@ -44,6 +69,7 @@ public class DemoController {
 	@RequestMapping("/knn/")
 	public String indexKnn(Model model) {
 		RSConfiguration config = new RSConfiguration();
+		/*TODO Claudio qui setta l'ogetto config.*/
 		model.addAttribute("config", config);
 		return "homeKNN.html";
 	}
@@ -52,6 +78,7 @@ public class DemoController {
 	@RequestMapping("/ml/")
 	public String indexML(Model model) {
 		RSConfiguration config = new RSConfiguration();
+		/*TODO Claudio qui setta l'ogetto config.*/
 		model.addAttribute("config", config);
 		return "homeML.html";
 	}
@@ -63,7 +90,6 @@ public class DemoController {
 		try {
 			s = fh.getXtexString(config);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		model.addAttribute("xtext", s);
@@ -73,15 +99,16 @@ public class DemoController {
 	
 	@RequestMapping(value = "/dslKNN", method = RequestMethod.POST)
 	public String saveKNN(Model model, @ModelAttribute("config") RSConfiguration config) {
-		String s = "";
-		try {
-			s = fh.getXtexString(config);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		model.addAttribute("xtext", s);
-		return "dsl.html";
+		
+		model.addAttribute("xtext", knn);
+		return "dslKNN.html";
+	}
+	
+	@RequestMapping(value = "/dslML", method = RequestMethod.POST)
+	public String saveML(Model model, @ModelAttribute("config") RSConfiguration config) {
+		
+		model.addAttribute("xtext", ml);
+		return "dslML.html";
 	}
 
 	@RequestMapping(path = "/generate", method = RequestMethod.GET)

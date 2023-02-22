@@ -1,3 +1,4 @@
+
 #Deriving the latest base image
 FROM python:3.8
 
@@ -19,4 +20,5 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 #CMD instruction should be used to run the software
 #contained by your image, along with any arguments.
 
-CMD [ "python", "./RecSys.py"]
+CMD [ "python", "./RecSys_interface.py"]
+EXPOSE 5000

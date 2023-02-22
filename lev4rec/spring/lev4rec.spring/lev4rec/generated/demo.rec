@@ -1,9 +1,9 @@
 RSModel myRsModel {
-dataset : SupervisedDataset datasetName {
-preprocessing [ VECTORIZATION ]
+dataset : UnsupervisedDataset datasetName {
+preprocessing [ NORMALIZATION ]
 datasetManipulationLibrary [ PANDAS ]
 path '/mypath'
-dataStructure Matrix data { } dependatVariable Variable user { type String dataSource File file { } }
+dataStructure Matrix data { }
 }
 presentationLayer : RawOutcomes presentation_layer { } evaluation : Evaluation eval {
 validationTechnique [ CrossValidation cross { nOfRecommendations 0 } ]
