@@ -1,2 +1,5 @@
-docker image build -t -i claudio_docker .
-docker run -i claudio_docker
+##Install requirements
+```pip3 install --no-cache-dir -r requirements.txt```
+
+##Run the evaluation
+```python ./runme.py```
