@@ -9,16 +9,15 @@ You should conduct the following steps to run this setup:
 	
 ![image](https://user-images.githubusercontent.com/7288605/220878117-6b96859d-33b2-404a-a331-bcc28b8ab329.png)
 
-2. Run the LEV4REC plaftorm using: 
+2. Run the LEV4REC plaftorm using: Please note that the last command can take more than 5 minutes, depending on the platform you are using. It needs to dowload all the dependecies.
+
 
 	`docker-compose up` 
 ![image](https://user-images.githubusercontent.com/7288605/220878282-ef91f9f1-4ea2-40cb-b0e1-d99eab7c0356.png)
 
-	
-Please note that the last command can take more than 5 minutes, depending on the platform you are using. It needs to dowload all the dependecies.
-
-1. Access to the LEV4Rec web app by using the following address in the web browser: 
-[http://localhost:8891/lev4rec/](http://localhost:8891/lev4rec/)
+3. Access to the LEV4Rec web app by using the following address in the web browser: 
+[http://localhost:8891/lev4rec/](http://localhost:8891/lev4rec/).
+The LEV4REC user guide is available at [https://github.com/MDEGroup/LEV4REC-Tool/blob/main/use_case_artifacts/Documentation/DSL_wiki.md](https://github.com/MDEGroup/LEV4REC-Tool/blob/main/use_case_artifacts/Documentation/DSL_wiki.md)
 
 ![image](https://user-images.githubusercontent.com/7288605/220878482-368e5bc9-ff91-4172-8cbb-ab97e8b28961.png)
 
