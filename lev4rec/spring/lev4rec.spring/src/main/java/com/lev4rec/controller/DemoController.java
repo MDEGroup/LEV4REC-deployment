@@ -92,7 +92,12 @@ public class DemoController {
 		RSConfiguration config = new RSConfiguration();
 		config.setCollaborativeFiltering(true);
 		config.setItemBased(true);
-		/*TODO Claudio qui setta l'ogetto config.*/
+		config.setMatrix(true);
+		config.setSupervisedDataset(true);
+		config.setPandas(true);
+		config.setSplittingKfold(true);
+		config.setSurprise(true);
+		config.setRawOutcomes(true);		
 		model.addAttribute("config", config);
 		return "homeKNN.html";
 	}
@@ -101,9 +106,16 @@ public class DemoController {
 	@RequestMapping("/ml/")
 	public String indexML(Model model) {
 		RSConfiguration config = new RSConfiguration();
-		config.setCollaborativeFiltering(true);
-		config.setItemBased(true);
-		/*TODO Claudio qui setta l'ogetto config.*/
+		config.setClassification(true);
+		config.setSupervisedAlgorithm(true);
+		config.setSupervisedFeedForwardNN(true);
+		config.setVectorization(true);
+		config.setSklearn(true);
+		config.setMatrix(true);
+		config.setPandas(true);
+		config.setSupervisedDataset(true);
+		config.setSplittingKfold(true);
+		config.setRawOutcomes(true);		
 		model.addAttribute("config", config);
 		return "homeML.html";
 	}
