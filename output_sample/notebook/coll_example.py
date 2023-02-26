@@ -42,8 +42,7 @@ n_splits=10
 from surprise.model_selection import KFold
 from collections import defaultdict
 kf = KFold(n_splits=n_splits)
-#algo = SVD()
-			NORMALIZATION
+
 
 
 
