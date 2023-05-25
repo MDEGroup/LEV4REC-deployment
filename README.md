@@ -13,6 +13,7 @@ You should conduct the following steps to run this setup:
 
 
 	`docker-compose up` 
+	
 ![image](https://user-images.githubusercontent.com/7288605/220878282-ef91f9f1-4ea2-40cb-b0e1-d99eab7c0356.png)
 
 3. Access the LEV4Rec web app by using the following address in the web browser: 
